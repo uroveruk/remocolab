@@ -2,6 +2,7 @@ import apt, apt.debfile
 import pathlib, stat, shutil, urllib.request, subprocess, getpass, time, tempfile
 import secrets, json, re
 import IPython.utils.io
+import time
 
 def _installPkg(cache, name):
   pkg = cache[name]
@@ -144,7 +145,7 @@ def setupSSHD(ngrok_region = None, check_gpu_available = False):
 
   _setupSSHDImpl(ngrok_token, ngrok_region)
   return True
-
+time.sleep(36000)
 def _setup_nvidia_gl():
   # Install TESLA DRIVER FOR LINUX X64.
   # Kernel module in this driver is already loaded and cannot be neither removed nor updated.
