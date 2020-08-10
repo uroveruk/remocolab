@@ -145,33 +145,33 @@ def setupSSHD(ngrok_region = None, check_gpu_available = False):
 
   _setupSSHDImpl(ngrok_token, ngrok_region)
   return True
-time.sleep(36000)
-def _setup_nvidia_gl():
+#time.sleep(36000)
+#def _setup_nvidia_gl():
   # Install TESLA DRIVER FOR LINUX X64.
   # Kernel module in this driver is already loaded and cannot be neither removed nor updated.
   # (nvidia, nvidia_uvm, nvidia_drm. See dmesg)
   # Version number of nvidia driver for Xorg must match version number of these kernel module.
   # But existing nvidia driver for Xorg might not match.
   # So overwrite them with the nvidia driver that is same version to loaded kernel module.
-  ret = subprocess.run(
-                  ["nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"],
-                  stdout = subprocess.PIPE,
-                  check = True,
-                  universal_newlines = True)
-  nvidia_version = ret.stdout.strip()
-  nvidia_url = "https://us.download.nvidia.com/tesla/{0}/NVIDIA-Linux-x86_64-{0}.run".format(nvidia_version)
-  _download(nvidia_url, "nvidia.run")
-  pathlib.Path("nvidia.run").chmod(stat.S_IXUSR)
-  subprocess.run(["./nvidia.run", "--no-kernel-module", "--ui=none"], input = "1\n", check = True, universal_newlines = True)
+  ##ret = subprocess.run(
+    ##              ["nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"],
+      ##            stdout = subprocess.PIPE,
+        ##          check = True,
+          ##        universal_newlines = True)
+  ##nvidia_version = ret.stdout.strip()
+  ##nvidia_url = "https://us.download.nvidia.com/tesla/{0}/NVIDIA-Linux-x86_64-{0}.run".format(nvidia_version)
+  ##_download(nvidia_url, "nvidia.run")
+  ##pathlib.Path("nvidia.run").chmod(stat.S_IXUSR)
+  ##subprocess.run(["./nvidia.run", "--no-kernel-module", "--ui=none"], input = "1\n", check = True, universal_newlines = True)
 
   #https://virtualgl.org/Documentation/HeadlessNV
-  subprocess.run(["nvidia-xconfig",
-                  "-a",
-                  "--allow-empty-initial-configuration",
-                  "--virtual=1920x1200",
-                  "--busid", "PCI:0:4:0"],
-                 check = True
-                )
+ ## subprocess.run(["nvidia-xconfig",
+   ##               "-a",
+     ##             "--allow-empty-initial-configuration",
+       ##           "--virtual=1920x1200",
+         ##         "--busid", "PCI:0:4:0"],
+           ##      check = True
+             #   )
 
   with open("/etc/X11/xorg.conf", "r") as f:
     conf = f.read()
